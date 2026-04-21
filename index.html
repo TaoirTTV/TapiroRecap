@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tapiró - Resumen 2025-2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #0f0f0f; color: #fff; overflow-x: hidden; }
+        header { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        header h1 { font-size: 2.5rem; background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; }
+        main { margin-top: 80px; }
+        section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 20px; position: relative; overflow: hidden; }
+        .section-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .section-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .section-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .section-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .section-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .section-6 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .section-7 { background: linear-gradient(135deg, #ff6b6b 0%, #ff8c8c 100%); }
+        .section-8 { background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); }
+        .section-9 { background: linear-gradient(135deg, #f8b195 0%, #f67676 100%); }
+        .section-10 { background: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%); }
+        .section-11 { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+        section > * { position: relative; z-index: 1; }
+        .section-title { font-size: 3rem; margin-bottom: 40px; text-align: center; font-weight: 700; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); animation: fadeInDown 0.8s ease-out; }
+        .carousel-container { width: 100%; max-width: 900px; position: relative; display: flex; align-items: center; gap: 20px; animation: fadeInUp 0.8s ease-out 0.2s backwards; }
+        .carousel { width: 100%; background: rgba(255, 255, 255, 0.1); border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); aspect-ratio: 16 / 9; }
+        .carousel-inner { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .carousel-item { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.2); position: relative; }
+        .carousel-item img, .carousel-item video { width: 100%; height: 100%; object-fit: cover; }
+        .carousel-nav { background: rgba(255, 255, 255, 0.2); border: none; color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; transition: all 0.3s ease; }
+        .carousel-nav:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
+        .carousel-indicators { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .indicator { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s ease; }
+        .indicator.active { background: white; transform: scale(1.3); }
+        .indicator:hover { background: rgba(255, 255, 255, 0.7); }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { header h1 { font-size: 1.8rem; } .section-title { font-size: 2rem; } }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+    <header><h1>🎬 Tapiró 2025-2026</h1></header>
+    <main>
+        <section class="section-1">
+            <h2 class="section-title">Septiembre 2025</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(0)">❮</button>
+                <div class="carousel" id="carousel-0"><div class="carousel-inner" id="carousel-inner-0"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Septiembre"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(0)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-0"></div>
+        </section>
+        <section class="section-2">
+            <h2 class="section-title">Octubre 2025</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(1)">❮</button>
+                <div class="carousel" id="carousel-1"><div class="carousel-inner" id="carousel-inner-1"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Octubre"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(1)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-1"></div>
+        </section>
+        <section class="section-3">
+            <h2 class="section-title">Noviembre 2025</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(2)">❮</button>
+                <div class="carousel" id="carousel-2"><div class="carousel-inner" id="carousel-inner-2"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Noviembre"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(2)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-2"></div>
+        </section>
+        <section class="section-4">
+            <h2 class="section-title">Diciembre 2025</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(3)">❮</button>
+                <div class="carousel" id="carousel-3"><div class="carousel-inner" id="carousel-inner-3"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Diciembre"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(3)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-3"></div>
+        </section>
+        <section class="section-5">
+            <h2 class="section-title">Enero 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(4)">❮</button>
+                <div class="carousel" id="carousel-4"><div class="carousel-inner" id="carousel-inner-4"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Enero"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(4)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-4"></div>
+        </section>
+        <section class="section-6">
+            <h2 class="section-title">Febrero 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(5)">❮</button>
+                <div class="carousel" id="carousel-5"><div class="carousel-inner" id="carousel-inner-5"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Febrero"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(5)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-5"></div>
+        </section>
+        <section class="section-7">
+            <h2 class="section-title">Marzo 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(6)">❮</button>
+                <div class="carousel" id="carousel-6"><div class="carousel-inner" id="carousel-inner-6"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Marzo"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(6)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-6"></div>
+        </section>
+        <section class="section-8">
+            <h2 class="section-title">Abril 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(7)">❮</button>
+                <div class="carousel" id="carousel-7"><div class="carousel-inner" id="carousel-inner-7"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Abril"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(7)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-7"></div>
+        </section>
+        <section class="section-9">
+            <h2 class="section-title">Mayo 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(8)">❮</button>
+                <div class="carousel" id="carousel-8"><div class="carousel-inner" id="carousel-inner-8"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Mayo"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(8)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-8"></div>
+        </section>
+        <section class="section-10">
+            <h2 class="section-title">Junio 2026</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(9)">❮</button>
+                <div class="carousel" id="carousel-9"><div class="carousel-inner" id="carousel-inner-9"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Junio"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(9)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-9"></div>
+        </section>
+        <section class="section-11">
+            <h2 class="section-title">✨ Lo Mejor del Año ✨</h2>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" onclick="prevSlide(10)">❮</button>
+                <div class="carousel" id="carousel-10"><div class="carousel-inner" id="carousel-inner-10"><div class="carousel-item"><img src="media/_DSC6094.jpg" alt="Lo mejor"></div><div class="carousel-item"><video controls><source src="media/WhatsApp Video 2026-04-21 at 19.16.21.mp4" type="video/mp4"></video></div></div></div>
+                <button class="carousel-nav next" onclick="nextSlide(10)">❯</button>
+            </div>
+            <div class="carousel-indicators" id="indicators-10"></div>
+        </section>
+    </main>
+    <script>
+        const carousels = [{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2},{currentIndex:0,itemCount:2}];
+        function updateCarousel(i){const c=carousels[i];const inner=document.getElementById(`carousel-inner-`+i);const offset=-c.currentIndex*100;inner.style.transform=`translateX(`+offset+`%)`;updateIndicators(i);}
+        function updateIndicators(i){document.querySelectorAll(`#indicators-`+i+` .indicator`).forEach((ind,idx)=>{ind.classList.toggle('active',idx===carousels[i].currentIndex);});}
+        function nextSlide(i){carousels[i].currentIndex=(carousels[i].currentIndex+1)%carousels[i].itemCount;updateCarousel(i);}
+        function prevSlide(i){carousels[i].currentIndex=(carousels[i].currentIndex-1+carousels[i].itemCount)%carousels[i].itemCount;updateCarousel(i);}
+        function setSlide(i,n){carousels[i].currentIndex=n;updateCarousel(i);}
+        function initializeCarousel(i,cnt){carousels[i].itemCount=cnt;const container=document.getElementById(`indicators-`+i);container.innerHTML='';for(let j=0;j<cnt;j++){const ind=document.createElement('div');ind.className='indicator'+(j===0?' active':'');ind.onclick=()=>setSlide(i,j);container.appendChild(ind);}}
+        document.addEventListener('DOMContentLoaded',()=>{carousels.forEach((_,i)=>{initializeCarousel(i,2);});});
+        document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'){const a=Math.floor(window.scrollY/window.innerHeight);if(a<carousels.length)nextSlide(a);}else if(e.key==='ArrowLeft'){const a=Math.floor(window.scrollY/window.innerHeight);if(a<carousels.length)prevSlide(a);}});
+    </script>
+</body>
+</html>
