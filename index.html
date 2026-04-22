@@ -1,90 +1,403 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tapiró Recap 25-26</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tapiró Recap 25-26 | Só, Vídeo i DJ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <link rel="preload" href="Tapiro%20svg.svg" as="image">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Georgia', serif; background: #000; color: #fff; overflow-x: hidden; }
-        header { position: fixed; top: 0; width: 100%; height: 60px; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        main { scroll-snap-type: y mandatory; height: 100vh; overflow-y: scroll; }
-        section { height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; }
-        .section-title { font-size: 1.8rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-        
-        .media-wrapper { width: 100%; max-width: 400px; height: 70vh; position: relative; background: #111; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .media-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        img, video { width: 100%; height: 100%; object-fit: cover; }
-        
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10; backdrop-filter: blur(5px); }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-        .no-content { color: #555; font-style: italic; text-align: center; padding: 20px; }
-        .counter { position: absolute; bottom: 10px; right: 20px; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 10px; }
+        :root {
+            --bg-base: #050508;
+        }
 
-        /* Fondos por mes */
-        section:nth-child(odd) { background: #0c0c0c; }
-        section:nth-child(even) { background: #151515; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg-base); 
+            color: #fff; 
+            overflow: hidden; 
+            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-attachment: fixed;
+        }
+
+        #main-container {
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            height: 100dvh; 
+            position: relative;
+            background-color: var(--bg-base);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            border-left: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        header { 
+            position: absolute; 
+            top: 0; 
+            width: 100%; 
+            height: 70px; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            display: flex; 
+            align-items: flex-start; 
+            justify-content: center; 
+            padding-top: 15px;
+            z-index: 1000; 
+            pointer-events: none; 
+        }
+        
+        header h1 {
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        main { 
+            display: flex;
+            flex-direction: row;
+            scroll-snap-type: x mandatory; 
+            height: 100%; 
+            overflow-x: scroll; 
+            overflow-y: hidden;
+            scrollbar-width: none; 
+        }
+        main::-webkit-scrollbar { display: none; }
+
+        section { 
+            min-width: 100%; 
+            height: 100%; 
+            scroll-snap-align: start; 
+            position: relative; 
+            flex-shrink: 0;
+            overflow: hidden; 
+        }
+
+        /* ----- LOADER MÁS GRANDE Y SIN RECORTES ----- */
+        /* ----- LOADER ARREGLADO ----- */
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* Aumentamos el tamaño del contenedor a 140px para que tenga espacio al rotar */
+            width: 140px; 
+            height: 140px;
+            /* El margen negativo siempre debe ser exactamente la mitad del width/height para centrarlo */
+            margin: -70px 0 0 -70px; 
+            z-index: 15;
+            animation: spin 1.5s linear infinite;
+            filter: brightness(1) invert(1); 
+            pointer-events: none;
+            background-image: url('Tapiro%20svg.svg');
+            /* Al usar 70% en vez de contain, le damos un "margen de seguridad" para que nunca se corte */
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%; 
+            height: 120%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            filter: blur(80px); 
+            pointer-events: none;
+        }
+        .bg-glow img, .bg-glow video { 
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 0.8s ease; 
+        }
+
+        .media-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 130px 15px 40px 15px;
+            pointer-events: none; 
+        }
+        
+        .media-layer img, .media-layer video { 
+            max-width: 100%; 
+            max-height: 100%; 
+            width: auto; 
+            height: auto; 
+            object-fit: contain; 
+            border-radius: 16px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        .ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            pointer-events: none; 
+        }
+
+        .story-header {
+            padding: 70px 20px 20px 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            pointer-events: none;
+        }
+
+        .section-title { 
+            font-size: 1.2rem; 
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 0 0 15px rgba(0,0,0,0.9);
+            text-transform: uppercase;
+            margin: 0; 
+            text-align: center;
+        }
+
+        .stories-progress {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            gap: 4px;
+        }
+        
+        .progress-bar {
+            height: 3px;
+            flex-grow: 1;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5); 
+        }
+        
+        .progress-bar.active { 
+            background: #fff; 
+            box-shadow: 0 0 8px rgba(255,255,255,0.8); 
+        }
+
+        .touch-zones {
+            flex: 1; 
+            display: flex;
+            width: 100%;
+            pointer-events: auto; 
+        }
+        .touch-left { width: 50%; height: 100%; }
+        .touch-right { width: 50%; height: 100%; }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(0, 150, 255, 0.1) 0%, transparent 70%);
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 0.9;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            z-index: 10;
+        }
+        .hero-subtitle {
+            font-size: 0.9rem;
+            color: #00f0ff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        .scroll-hint {
+            position: absolute; 
+            bottom: 40px; 
+            color: rgba(255,255,255,0.4);
+            font-size: 0.8rem; 
+            letter-spacing: 2px; 
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            padding: 20px;
+            z-index: 20;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+
     </style>
 </head>
 <body>
 
-<header><h1>🎬 TAPIRÓ 25-26</h1></header>
-<main id="content"></main>
+<div id="main-container">
+    <header><h1>RECAP 25/26</h1></header>
+    
+    <main id="content">
+        <section class="hero-section">
+            <h1 class="hero-title">TAPIRÓ<br>Recap</h1>
+            <p class="hero-subtitle">Só, VÍDEO i DJ</p>
+            <div class="scroll-hint" onclick="nextMonth()">DESLIZA O TOCA ➔</div>
+        </section>
+    </main>
+</div>
 
 <script src="lista.js"></script>
 
 <script>
     const meses = [
-        { id: 'SEPT25', n: 'Septiembre 2025' }, { id: 'OCT25', n: 'Octubre 2025' },
-        { id: 'NOV25', n: 'Noviembre 2025' }, { id: 'DEC25', n: 'Diciembre 2025' },
-        { id: 'JAN26', n: 'Enero 2026' }, { id: 'FEB26', n: 'Febrero 2026' },
-        { id: 'MAR26', n: 'Marzo 2026' }, { id: 'APR26', n: 'Abril 2026' },
-        { id: 'MAY26', n: 'Mayo 2026' }, { id: 'JUN26', n: 'Junio 2026' },
+        { id: 'SEPT25', n: 'Septiembre' }, { id: 'OCT25', n: 'Octubre' },
+        { id: 'NOV25', n: 'Noviembre' }, { id: 'DEC25', n: 'Diciembre' },
+        { id: 'JAN26', n: 'Enero' }, { id: 'FEB26', n: 'Febrero' },
+        { id: 'MAR26', n: 'Marzo' }, { id: 'APR26', n: 'Abril' },
+        { id: 'MAY26', n: 'Mayo' }, { id: 'JUN26', n: 'Junio' },
         { id: 'extra', n: '✨ Lo Mejor' }
     ];
 
     const main = document.getElementById('content');
-    const indices = {}; // Para rastrear en qué foto está cada mes
+    const indices = {}; 
+
+    function nextMonth() {
+        main.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+    }
+
+    main.addEventListener('wheel', (evt) => {
+        if (evt.deltaY !== 0) {
+            evt.preventDefault();
+            main.scrollBy({
+                left: evt.deltaY > 0 ? window.innerWidth : -window.innerWidth,
+                behavior: 'smooth'
+            });
+        }
+    }, { passive: false });
+
+    function updateProgress(mesId, index) {
+        const bars = document.querySelectorAll(`#progress-${mesId} .progress-bar`);
+        bars.forEach((bar, i) => {
+            bar.classList.toggle('active', i <= index);
+        });
+    }
+
+    function preloadNext(mesId, index) {
+        const archivos = mediaFiles[mesId];
+        if (index + 1 < archivos.length) {
+            const nextFile = archivos[index + 1];
+            if (!nextFile.toLowerCase().endsWith('.mp4')) {
+                const img = new Image();
+                img.src = `media/${mesId}/${nextFile}`;
+            }
+        }
+    }
 
     function renderMedia(mesId, index) {
         const archivos = mediaFiles[mesId];
         const container = document.getElementById(`media-${mesId}`);
-        const counter = document.getElementById(`count-${mesId}`);
+        const glowContainer = document.getElementById(`glow-${mesId}`);
         const file = archivos[index];
         const path = `media/${mesId}/${file}`;
 
-        container.innerHTML = file.endsWith('.mp4') 
-            ? `<video src="${path}" autoplay muted loop playsinline></video>`
-            : `<img src="${path}">`;
+        const loader = `<div class="loader" id="loader-${mesId}"></div>`;
+
+        if (file.toLowerCase().endsWith('.mp4')) {
+            container.innerHTML = `
+                ${loader}
+                <video id="vid-${mesId}" src="${path}" autoplay muted playsinline preload="metadata" 
+                       oncanplay="this.style.opacity=1; document.getElementById('loader-${mesId}').style.display='none';"></video>
+            `;
+            glowContainer.innerHTML = `<video src="${path}" autoplay muted loop playsinline preload="metadata" oncanplay="this.style.opacity=0.45;"></video>`;
+            
+            const video = document.getElementById(`vid-${mesId}`);
+            video.onended = () => { cambiarImagen(mesId, 1); };
+        } else {
+            container.innerHTML = `
+                ${loader}
+                <img src="${path}" loading="lazy" onload="this.style.opacity=1; document.getElementById('loader-${mesId}').style.display='none';">
+            `;
+            glowContainer.innerHTML = `<img src="${path}" loading="lazy" onload="this.style.opacity=0.45;">`;
+        }
         
-        counter.innerText = `${index + 1} / ${archivos.length}`;
+        updateProgress(mesId, index);
+        preloadNext(mesId, index); 
     }
 
-    function cambiarImagen(mesId, direccion) {
+    function cambiarImagen(mesId, direccion, event) {
+        if (event) event.stopPropagation(); 
         const archivos = mediaFiles[mesId];
-        indices[mesId] = (indices[mesId] + direccion + archivos.length) % archivos.length;
+        
+        let nuevoIndice = indices[mesId] + direccion;
+
+        if (nuevoIndice >= archivos.length) {
+            indices[mesId] = archivos.length - 1; 
+            main.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+            return;
+        } else if (nuevoIndice < 0) {
+            indices[mesId] = 0; 
+            main.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+            return;
+        }
+
+        indices[mesId] = nuevoIndice;
         renderMedia(mesId, indices[mesId]);
     }
 
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const mesId = entry.target.dataset.id;
+                if (indices[mesId] === undefined && mediaFiles[mesId] && mediaFiles[mesId].length > 0) {
+                    indices[mesId] = 0;
+                    renderMedia(mesId, 0);
+                }
+            }
+        });
+    }, { 
+        root: main, 
+        rootMargin: "0px 100% 0px 0px" 
+    });
+
     meses.forEach(m => {
         const sec = document.createElement('section');
+        sec.dataset.id = m.id; 
+        
         const archivos = (typeof mediaFiles !== 'undefined') ? mediaFiles[m.id] : null;
         
         if (archivos && archivos.length > 0) {
-            indices[m.id] = 0;
+            let progressHtml = `<div class="stories-progress" id="progress-${m.id}">`;
+            archivos.forEach(() => progressHtml += `<div class="progress-bar"></div>`);
+            progressHtml += `</div>`;
+
             sec.innerHTML = `
-                <h2 class="section-title">${m.n}</h2>
-                <div class="media-wrapper">
-                    <button class="nav-btn prev" onclick="cambiarImagen('${m.id}', -1)">❮</button>
-                    <div class="media-container" id="media-${m.id}"></div>
-                    <button class="nav-btn next" onclick="cambiarImagen('${m.id}', 1)">❯</button>
-                    <div class="counter" id="count-${m.id}"></div>
+                <div class="bg-glow" id="glow-${m.id}"></div>
+                <div class="media-layer" id="media-${m.id}"></div>
+                <div class="ui-layer">
+                    <div class="story-header">
+                        <h2 class="section-title">${m.n}</h2>
+                        ${progressHtml}
+                    </div>
+                    <div class="touch-zones">
+                        <div class="touch-left" onclick="cambiarImagen('${m.id}', -1, event)"></div>
+                        <div class="touch-right" onclick="cambiarImagen('${m.id}', 1, event)"></div>
+                    </div>
                 </div>`;
+                
             main.appendChild(sec);
-            renderMedia(m.id, 0);
+            observer.observe(sec); 
         } else {
-            sec.innerHTML = `<h2 class="section-title">${m.n}</h2><p class="no-content">No hay imágenes disponibles para este mes</p>`;
+            sec.innerHTML = `
+                <div class="ui-layer" style="justify-content: center; align-items: center;">
+                    <h2 class="section-title">${m.n}</h2>
+                    <p style="color:#555; font-size:0.8rem; letter-spacing: 2px;">PRÒXIMAMENT</p>
+                </div>`;
             main.appendChild(sec);
         }
     });
