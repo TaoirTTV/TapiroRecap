@@ -59,6 +59,47 @@
             opacity: 0.7;
         }
 
+        /* --- SELECTOR DE MESES DISCRETO --- */
+        .nav-drop {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: auto;
+            z-index: 1100;
+        }
+        
+        .nav-drop select {
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 28px 6px 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        .nav-drop select:hover, .nav-drop select:focus {
+            color: #00f0ff;
+            border-color: rgba(0, 240, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-drop select option {
+            background: #050508;
+            color: #fff;
+        }
+
         main { 
             display: flex;
             flex-direction: row;
@@ -79,23 +120,18 @@
             overflow: hidden; 
         }
 
-        /* ----- LOADER MÁS GRANDE Y SIN RECORTES ----- */
-        /* ----- LOADER ARREGLADO ----- */
         .loader {
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Aumentamos el tamaño del contenedor a 140px para que tenga espacio al rotar */
             width: 140px; 
             height: 140px;
-            /* El margen negativo siempre debe ser exactamente la mitad del width/height para centrarlo */
             margin: -70px 0 0 -70px; 
             z-index: 15;
             animation: spin 1.5s linear infinite;
             filter: brightness(1) invert(1); 
             pointer-events: none;
             background-image: url('Tapiro%20svg.svg');
-            /* Al usar 70% en vez de contain, le damos un "margen de seguridad" para que nunca se corte */
             background-size: 70%;
             background-position: center;
             background-repeat: no-repeat;
@@ -241,10 +277,17 @@
 <body>
 
 <div id="main-container">
-    <header><h1>RECAP 25/26</h1></header>
+    <header>
+        <div class="nav-drop">
+            <select id="month-selector" onchange="irAMes(this.value)">
+                <option value="inicio">Índice</option>
+            </select>
+        </div>
+        <h1>RECAP 25/26</h1>
+    </header>
     
     <main id="content">
-        <section class="hero-section">
+        <section class="hero-section" data-id="inicio">
             <h1 class="hero-title">TAPIRÓ<br>Recap</h1>
             <p class="hero-subtitle">Só, VÍDEO i DJ</p>
             <div class="scroll-hint" onclick="nextMonth()">DESLIZA O TOCA ➔</div>
@@ -268,14 +311,14 @@
     const indices = {}; 
 
     function nextMonth() {
-        main.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+        main.scrollBy({ left: main.clientWidth, behavior: 'smooth' });
     }
 
     main.addEventListener('wheel', (evt) => {
         if (evt.deltaY !== 0) {
             evt.preventDefault();
             main.scrollBy({
-                left: evt.deltaY > 0 ? window.innerWidth : -window.innerWidth,
+                left: evt.deltaY > 0 ? main.clientWidth : -main.clientWidth,
                 behavior: 'smooth'
             });
         }
@@ -338,11 +381,11 @@
 
         if (nuevoIndice >= archivos.length) {
             indices[mesId] = archivos.length - 1; 
-            main.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+            main.scrollBy({ left: main.clientWidth, behavior: 'smooth' });
             return;
         } else if (nuevoIndice < 0) {
             indices[mesId] = 0; 
-            main.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+            main.scrollBy({ left: -main.clientWidth, behavior: 'smooth' });
             return;
         }
 
@@ -350,11 +393,12 @@
         renderMedia(mesId, indices[mesId]);
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    // --- OBSERVER 1: PRECARGA DE MULTIMEDIA ---
+    const preloadObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const mesId = entry.target.dataset.id;
-                if (indices[mesId] === undefined && mediaFiles[mesId] && mediaFiles[mesId].length > 0) {
+                if (mesId && indices[mesId] === undefined && mediaFiles[mesId] && mediaFiles[mesId].length > 0) {
                     indices[mesId] = 0;
                     renderMedia(mesId, 0);
                 }
@@ -362,9 +406,31 @@
         });
     }, { 
         root: main, 
-        rootMargin: "0px 100% 0px 0px" 
+        rootMargin: "0px 100% 0px 0px", 
+        threshold: 0.1
     });
 
+    // --- OBSERVER 2: SINCRONIZACIÓN DEL MENÚ ---
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const selector = document.getElementById('month-selector');
+                if (selector) {
+                    selector.value = entry.target.dataset.id;
+                }
+            }
+        });
+    }, { 
+        root: main, 
+        threshold: 0.6 
+    });
+
+    // Observar la pantalla de inicio
+    const inicioSec = document.querySelector('section[data-id="inicio"]');
+    if (inicioSec) navObserver.observe(inicioSec);
+
+
+    // Generación de las secciones
     meses.forEach(m => {
         const sec = document.createElement('section');
         sec.dataset.id = m.id; 
@@ -391,7 +457,8 @@
                 </div>`;
                 
             main.appendChild(sec);
-            observer.observe(sec); 
+            preloadObserver.observe(sec); 
+            navObserver.observe(sec);     
         } else {
             sec.innerHTML = `
                 <div class="ui-layer" style="justify-content: center; align-items: center;">
@@ -399,8 +466,70 @@
                     <p style="color:#555; font-size:0.8rem; letter-spacing: 2px;">PRÒXIMAMENT</p>
                 </div>`;
             main.appendChild(sec);
+            navObserver.observe(sec);
         }
     });
+
+    // --- PANTALLA FINAL ---
+    const finalSection = document.createElement('section');
+    finalSection.className = 'hero-section'; 
+    finalSection.dataset.id = 'final';
+    finalSection.innerHTML = `
+        <h1 class="hero-title" id="final-title" style="font-size: 3rem; transition: opacity 0.4s ease;">Has llegado<br>al final</h1>
+        <div class="scroll-hint" id="final-hint" onclick="mostrarSorpresa()" style="transition: opacity 0.4s ease; bottom: 80px;">CLICK AQUÍ PARA VER MÁS</div>
+    `;
+    main.appendChild(finalSection);
+    navObserver.observe(finalSection);
+
+
+    // --- LÓGICA DEL DESPLEGABLE ---
+    const selector = document.getElementById('month-selector');
+    
+    meses.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.n;
+        selector.appendChild(opt);
+    });
+
+    const optFinal = document.createElement('option');
+    optFinal.value = 'final';
+    optFinal.textContent = 'Fin';
+    selector.appendChild(optFinal);
+
+    window.mostrarSorpresa = function() {
+        const title = document.getElementById('final-title');
+        const hint = document.getElementById('final-hint');
+
+        title.style.opacity = 0;
+        hint.style.opacity = 0;
+
+        setTimeout(() => {
+            title.innerHTML = "QUÉ MÁS QUIERES<br>PUTO PESAO";
+            title.style.fontSize = "2.5rem"; 
+            title.style.lineHeight = "1.1"; 
+            title.style.padding = "10px 0"; 
+            hint.style.display = 'none';
+            title.style.opacity = 1;
+        }, 400);
+    };
+
+    window.irAMes = function(id) {
+        if (id === 'inicio') {
+            main.scrollTo({ left: 0, behavior: 'smooth' });
+            return;
+        }
+        
+        const secciones = Array.from(document.querySelectorAll('section'));
+        const index = secciones.findIndex(s => s.dataset.id === id);
+        
+        if (index !== -1) {
+            main.scrollTo({ 
+                left: index * main.clientWidth, 
+                behavior: 'smooth' 
+            });
+        }
+    };
 </script>
 </body>
 </html>
